@@ -142,7 +142,8 @@ function game(){
     }else{
         alert("It's a tie!!!");
     }
-    alert("                  R1        R2        R3        R4        R5           |Total\n"+
+    alert("Final Results:\n"+
+    "                  R1        R2        R3        R4        R5           |Total\n"+
     "------------------------------------------------------------------\n"+
     `User:           ${user_scoresString}   |${final_userScore}\n`+
     `Machine:     ${machine_scoresString}   |${final_machineScore}`);
