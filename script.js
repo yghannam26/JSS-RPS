@@ -34,7 +34,6 @@ function computerPlay(){
     const hand_shapes=["rock", "paper", "scissors","paper","rock","scissors","rock", "paper", "scissors"];
     machine_choice_index=Math.floor(Math.random()*9);
     return hand_shapes[machine_choice_index];
-
 }
 function playRound(user_choice, machine_choice){
     let user_score,
