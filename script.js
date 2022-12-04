@@ -29,7 +29,13 @@ do{
 }while(play_again=="yes"||play_again=="y"||menu==1||invalid_choice==1);
 
 
+function computerPlay(){
+    let machine_choice_index;
+    const hand_shapes=["rock", "paper", "scissors","paper","rock","scissors","rock", "paper", "scissors"];
+    machine_choice_index=Math.floor(Math.random()*9);
+    return hand_shapes[machine_choice_index];
 
+}
 function playRound(user_choice, machine_choice){
     let user_score,
     machine_score;
@@ -74,8 +80,7 @@ function playRound(user_choice, machine_choice){
 
 
 function game(){
-    let machine_choice_index, 
-    user_score,
+    let user_score,
     machine_score,
     user_choice,
     machine_choice;
@@ -84,14 +89,12 @@ function game(){
     final_machineScore=0,
     user_scoresString = "",
     machine_scoresString="";
-    const hand_shapes=["rock", "paper", "scissors","scissors","paper","rock"],
-    user_scores=[], 
+    const user_scores=[], 
     machine_scores=[];
 
     for(let i=0; i<5; i++){
         alert(`>>>>>>round ${i+1}<<<<<<`);
-        machine_choice_index=Math.floor(Math.random()*6);
-        machine_choice=hand_shapes[machine_choice_index];
+        machine_choice=computerPlay();
         user_choice=prompt("Rock, Paper or Scissors?--").toLowerCase().trim();
         round_results=playRound(user_choice, machine_choice);
         user_score=round_results[0];
@@ -105,10 +108,15 @@ function game(){
             final_machineScore++;
             if (final_machineScore==3) break;
         }else{
+            console.log(`Round ${i+1}: It's a tie\n`+
+            `No change`);
             alert(`Round ${i+1}: It's a tie\n`+
             `No change`);
             continue;
         }
+        console.log(`Round ${i+1}: Results up until now:\n`+
+        `>user:${final_userScore}\n`+
+        `>machine:${final_machineScore}`);
         alert(`Round ${i+1}: Results up until now:\n`+
         `>user:${final_userScore}\n`+
         `>machine:${final_machineScore}`);
@@ -116,12 +124,12 @@ function game(){
 
     if(machine_scores.length<5){
         if (machine_scores.length==3) {
-            machine_scores.push(0,0)
-            user_scores.push(0,0)
+            machine_scores.push(0,0);
+            user_scores.push(0,0);
         }
         else {
             machine_scores.push(0);
-            user_scores.push(0)
+            user_scores.push(0);
         }
     }
     
@@ -142,6 +150,11 @@ function game(){
     }else{
         alert("It's a tie!!!");
     }
+    console.log("Final Results:\n"+
+    "                  R1        R2        R3        R4        R5           |Total\n"+
+    "------------------------------------------------------------------\n"+
+    `User:           ${user_scoresString}   |${final_userScore}\n`+
+    `Machine:     ${machine_scoresString}   |${final_machineScore}`);
     alert("Final Results:\n"+
     "                  R1        R2        R3        R4        R5           |Total\n"+
     "------------------------------------------------------------------\n"+
