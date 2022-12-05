@@ -29,6 +29,10 @@ do{
 }while(play_again=="yes"||play_again=="y"||menu==1||invalid_choice==1);
 
 
+function userPlay(){
+    let user_choice=prompt("Rock, Paper or Scissors?--").toLowerCase().trim();
+    return  user_choice;
+}
 function computerPlay(){
     let machine_choice_index;
     const hand_shapes=["rock", "paper", "scissors","paper","rock","scissors","rock", "paper", "scissors"];
@@ -94,7 +98,7 @@ function game(){
     for(let i=0; i<5; i++){
         alert(`>>>>>>round ${i+1}<<<<<<`);
         machine_choice=computerPlay();
-        user_choice=prompt("Rock, Paper or Scissors?--").toLowerCase().trim();
+        user_choice=userPlay();
         round_results=playRound(user_choice, machine_choice);
         user_score=round_results[0];
         machine_score=round_results[1];
