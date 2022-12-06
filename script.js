@@ -1,10 +1,10 @@
-function userPlay(){
+function userPlay(round){
     const hand_shapes=["rock", "paper", "scissors"]
     let user_choice,
     user_exit;
     let input_taken=false;
     while (!input_taken){
-        user_choice=prompt("Rock, Paper or Scissors?--");
+        user_choice=prompt(`Round: ${round}: Rock, Paper or Scissors?--`);
         if (user_choice == null){
             do{
                 user_exit=prompt("Are you sure you want to exit? (yes or no)");                
@@ -72,17 +72,17 @@ function playRound(user_choice, machine_choice){
 
 function print_RoundResults(round,user_score,machine_score,final_machineScore,final_userScore){
     if (user_score==machine_score){
-        console.log(`Round ${round+1}: It's a tie\n`+
+        console.log(`Round ${round}: It's a tie\n`+
         `No change`);
-        alert(`Round ${round+1}: It's a tie\n`+
+        alert(`Round ${round}: It's a tie\n`+
         `No change`);
     }else if(user_score){
-        alert(`Round ${round+1}: You have won this round!`);
-        console.log(`Round ${round+1}: You have won this round!`);
+        alert(`Round ${round}: You have won this round!`);
+        console.log(`Round ${round}: You have won this round!`);
     }
     else {
-        alert(`Round ${round+1}: The machine has won this round!`);
-        console.log(`Round ${round+1}: The machine has won this round!`);
+        alert(`Round ${round}: The machine has won this round!`);
+        console.log(`Round ${round}: The machine has won this round!`);
     }
     alert(`Results up until now:\n`+
     `>user:${final_userScore}\n`+
@@ -136,7 +136,9 @@ function game(){
     let user_score,
     machine_score,
     user_choice,
-    machine_choice;
+    machine_choice,
+    two_pointsAtEnd_user,
+    two_pointsAtEnd_machine;
     let round_results=[],
     final_userScore=0, 
     final_machineScore=0;
@@ -145,22 +147,22 @@ function game(){
     for(let i=0; i<5; i++){
         alert(`>>>>>>round ${i+1}<<<<<<`);
         machine_choice=computerPlay();
-        user_choice=userPlay();
+        user_choice=userPlay(i+1);
         round_results=playRound(user_choice, machine_choice);
         user_score=round_results[0];
         machine_score=round_results[1];
         user_scores.push(user_score);
-        machine_scores.push(machine_score); 
+        machine_scores.push(machine_score);
         if(user_score){
             final_userScore++;
-            if (final_userScore==3) break;
-            else if (i==3 && final_userScore==2 && final_machineScore==0) break;
         }else if (machine_score){
             final_machineScore++;
-            if (final_machineScore==3) break;
-            else if (i==3 && final_machineScore==2 && final_userScore==0) break;
         }
-        print_RoundResults(i,user_score,machine_score,final_machineScore,final_userScore);
+        two_pointsAtEnd_user= Boolean(i==3 && final_userScore==2 && final_machineScore==0);
+        two_pointsAtEnd_machine= Boolean(i==3 && final_machineScore==2 && final_userScore==0);
+        if (final_userScore==3 || final_machineScore==3
+        || two_pointsAtEnd_user || two_pointsAtEnd_machine) break;
+        print_RoundResults(i+1,user_score,machine_score,final_machineScore,final_userScore);
     }
     print_FinalResults(machine_scores,user_scores,final_machineScore,final_userScore);
 }
@@ -180,15 +182,19 @@ function start(){
         "Plese select an option:");
         switch (user_choice){
             case "1":
-                alert("You will be playing against the machine in a Rock Paper Scissors match;\n"+
-                "and the match will consist of 5 rounds.In each round, an random player will start,\n"+
-                "and as for your options, you will\nhave to choose between either, rock, paper or scissors.\n"+
-                "Good Luck, and \"May the odds be ever in your favor!");
+                alert("-You will be playing against the machine in a Rock-Paper-Scissors match, where "+
+                "the machine will be choosing randomly.\n-The match will consist of 5 rounds, "+
+                "but there could be a winner before that; and at that point, the game will terminate.\n"+
+                "-Results will be displayed at the end of each roundm to track the points.\n"+
+                "-Good Luck, and \"May the odds be ever in your favor.\"");
                 menu=1;
                 break;
             case "2":
                 game();
                 play_again=prompt("Another match? (yes or y)");
+                while(play_again ==""){
+                    play_again=prompt("Please enter a value");
+                }
                 if (play_again==null) {
                     alert("Good game! Until next time.")
                     break;
